@@ -1,0 +1,42 @@
+.attempt-row {
+    display: flex;
+    gap: 5px;
+}
+
+.attempt-char {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.char-placeholder {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+
+.default{
+    background-color: white;
+}
+
+.correct{
+    background-color: rgb(24, 190, 24);
+}
+
+.wrongplace{
+    background-color: rgb(221, 221, 127);
+}
+
+.attemp .char-inside span{
+    font-size: 1.2rem;
+}
+
+
+
+
+
