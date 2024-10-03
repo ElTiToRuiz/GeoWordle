@@ -1,19 +1,28 @@
 import { useEffect, useState } from "react"
 const URL = 'http://localhost:3000'
 
-export const useCity = ()=>{
+export const useCity = () => {
     const [city, setCity] = useState('')
 
-    const fetchCity = async () => {
-        const response = await fetch(URL)
-        const data = await response.json()
-        setCity(data.city.toUpperCase())
-    }
-
-    useEffect(()=>{
-        fetchCity()
+    useEffect(() => {
+        const fetchValidCity = async () => {
+            const fetchedCity = await fetchCity()
+            setCity(fetchedCity)
+        }
+        fetchValidCity()
     }, [])
 
-    return {city}
+    return { city, setCity }
 }
 
+
+export const fetchCity = async () => {
+    let fetchedCity = ''
+    do {
+        const response = await fetch(URL)
+        const data = await response.json()
+        fetchedCity = data.city.toUpperCase()
+    } while (!(fetchedCity.length > 5 && fetchedCity.length < 7 && !fetchedCity.includes(' ')))
+            
+    return fetchedCity
+}
