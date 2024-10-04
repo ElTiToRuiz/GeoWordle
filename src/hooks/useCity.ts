@@ -1,28 +1,22 @@
 import { useEffect, useState } from "react"
-const URL = 'http://localhost:3000'
+import { fetchCity, BACKEND_HOST } from "../service/fetchCity"
+import { loadCity } from "../service/localStorage"
 
 export const useCity = () => {
     const [city, setCity] = useState('')
 
     useEffect(() => {
+        const storedCity = loadCity()
+        if (storedCity) {
+            setCity(storedCity)
+            return
+        }
         const fetchValidCity = async () => {
-            const fetchedCity = await fetchCity()
+            const fetchedCity = await fetchCity({ BACKEND_HOST })
             setCity(fetchedCity)
         }
         fetchValidCity()
     }, [])
 
     return { city, setCity }
-}
-
-
-export const fetchCity = async () => {
-    let fetchedCity = ''
-    do {
-        const response = await fetch(URL)
-        const data = await response.json()
-        fetchedCity = data.city.toUpperCase()
-    } while (!(fetchedCity.length > 5 && fetchedCity.length < 7 && !fetchedCity.includes(' ')))
-            
-    return fetchedCity
 }

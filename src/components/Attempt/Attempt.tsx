@@ -1,7 +1,6 @@
+import './../style/attemp.css';
 
-import './attemp.css';
-
-export const Attemp = ({ userWord, display, charStatus } : {userWord: string, display: boolean, charStatus: string[]}) => {
+export const Attempt = ({ userWord, display, charStatus } : {userWord: string, display: boolean, charStatus: string[]}) => {
 
     return (
         <div className='attempt-row'>   
