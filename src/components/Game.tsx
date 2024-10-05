@@ -1,4 +1,5 @@
-import { useContext } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect } from 'react'
 import { Attempt } from './Attempt/Attempt'
 import { NewAttempt } from './NewAttempt/NewAttempt'
 import { GameStatusContext } from '../context/GameStatus'
@@ -8,12 +9,17 @@ import { useGameLogic } from '../hooks/gameFeatures'
 
 export const Game = ({city}:{city:string}) => {
     const MAX_ATTEMPTS = 6
-
     const {win, end, gameStarted} = useContext(GameStatusContext)
     const {userInputs, charStatus} = useContext(UserAttemptsContext) 
-    const {startGame, restart} = useGameLogic()
+    const {startGame, restart, saveLocalUserInputs, saveLocalCharStatus} = useGameLogic()
     
+    useEffect(()=>{
+        saveLocalUserInputs()
+    }, [userInputs])
 
+    useEffect(()=>{
+        saveLocalCharStatus()
+    }, [charStatus])
         
     return(
         <div className='main'>

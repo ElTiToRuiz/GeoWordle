@@ -1,5 +1,16 @@
 import { ReactNode } from "react";
 
+export type localStoragePair = {
+    key: string,
+    value: string
+}
+
+export type gameBoolean = {
+    win: boolean,
+    end: boolean,
+    gameStarted: boolean
+}
+
 export interface Children {
     children: ReactNode;
 }

@@ -1,19 +1,11 @@
-export type localStorage = {
-    key: string,
-    value: string
-}
+import { localStoragePair } from "../utils/interface"
 
-export type gameBoolean = {
-    win: boolean,
-    end: boolean,
-    gameStarted: boolean
-}
 
-const save = ({data}:{data:localStorage}) => {
+const save = ({data}:{data: localStoragePair}) => {
     localStorage.setItem(data.key, data.value)
 }
 
-const load = ({key}:{key:string}) => {
+const load = ({key}:{key: string}) => {
     if(exist({key})){
         return localStorage.getItem(key)
     }else{
@@ -21,7 +13,7 @@ const load = ({key}:{key:string}) => {
     }
 }
 
-const exist = ({key}:{key:string}) => {
+const exist = ({key}:{key: string}) => {
     return localStorage.getItem(key) !== null
 }
 
@@ -40,21 +32,6 @@ export const loadCity = () => {
     }catch (e){
         return null
         console.log(e)
-    }
-}
-
-// BOOLEAN
-export const saveBoolean = ({boolean}:{boolean: gameBoolean}) => {
-    save({data: {key: 'boolean', value: JSON.stringify(boolean)}})
-}
-
-export const loadBoolean = () => {
-    try{
-        const boolean =  load({key: 'boolean'})
-        return boolean ? JSON.parse(boolean) : null
-    }catch (e){
-        console.log(e)
-        return null
     }
 }
 
@@ -87,4 +64,8 @@ export const loadCharStatus = () => {
         console.log(e)
         return null
     }
+}
+
+export const clearLocalStorge = () => {
+    localStorage.clear()
 }

@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { GameStatusContext } from "../context/GameStatus";
 import { UserAttemptsContext } from "../context/UserAttempts";
-import { checkLineCharacters } from "../utils/checkLine";
+import { checkLineCharacters } from "../service/checkLine";
+import { clearLocalStorge, saveCharStatus, saveCity, saveUserInputs } from "../service/localStorage";
 
 export const useGameLogic = () => {
     const { setWin, setEnd, gameStarted, setGameStarted } = useContext(GameStatusContext);
@@ -21,11 +22,11 @@ export const useGameLogic = () => {
     };
 
     const restart = () => {
-        localStorage.clear();
+        clearLocalStorge();
         window.location.reload();
     };
 
-    const checkLine = async ({ userWord, city }: { userWord: string; city: string }) => {
+    const checkLine = ({ userWord, city }: { userWord: string; city: string }) => {
         if (userWord === city) {
             setWin(true);
             setEnd(true)
@@ -45,10 +46,25 @@ export const useGameLogic = () => {
         }
     };
 
+    const saveLocalCity = ({city}:{city:string}) => {
+        saveCity({city})
+    }
+
+    const saveLocalUserInputs = () => {
+        saveUserInputs({ userInputs })
+    }
+
+    const saveLocalCharStatus = () => {
+        saveCharStatus({ charStatus })
+    }
+
     return {
         startGame,
         nextLine,
         restart,
-        checkLine
+        checkLine,
+        saveLocalCity,
+        saveLocalUserInputs, 
+        saveLocalCharStatus
     };
 };
