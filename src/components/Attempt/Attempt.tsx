@@ -1,13 +1,13 @@
 import './../style/attemp.css';
 
-export const Attempt = ({ userWord, display, charStatus } : {userWord: string, display: boolean, charStatus: string[]}) => {
-
+export const Attempt = ({ userWord, charStatus } : {userWord: string, charStatus: string[]}) => {
+    
     return (
-        <div className='attempt-row'>   
+        <div className='attempt-row'>
             {
-                Array.from(userWord).map((char, charIndex) => (
-                    <div key={charIndex} className={`attempt-char ${display ? charStatus[charIndex] : ''}`}>
-                        <span className='char-placeholder'>{display ? char : ""}</span>
+                Array.from(userWord).map((_, index) => (
+                    <div key={index} className={`attempt-char ${charStatus && charStatus.length > 0 ? charStatus[index] : ''}`}>
+                        <span className='char-placeholder'>{charStatus && charStatus.length > 0 ? userWord[index] : ''}</span>
                     </div>
                 ))
             }

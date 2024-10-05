@@ -4,22 +4,17 @@ import { NewAttempt } from './NewAttempt/NewAttempt'
 import { GameStatusContext } from '../context/GameStatus'
 import { UserAttemptsContext } from '../context/UserAttempts'
 import './style/game.css'
+import { useGameLogic } from '../hooks/gameFeatures'
 
 export const Game = ({city}:{city:string}) => {
     const MAX_ATTEMPTS = 6
 
-    const {win, end, gameStarted, setGameStarted} = useContext(GameStatusContext)
+    const {win, end, gameStarted} = useContext(GameStatusContext)
     const {userInputs, charStatus} = useContext(UserAttemptsContext) 
+    const {startGame, restart} = useGameLogic()
     
-    const startGame = () => {
-        if(!gameStarted){
-            setGameStarted(true)
-        }
-    }
-    const resetGame = () => {
-        setGameStarted(false)
-    }
-    
+
+        
     return(
         <div className='main'>
             <div className='main-start'>
@@ -30,13 +25,13 @@ export const Game = ({city}:{city:string}) => {
             {gameStarted && (
                 <div className='attempts-container'>
                     {userInputs && userInputs.map((input, index) => (
-                        <Attempt key={index} userWord={input} display={true} charStatus={charStatus ? charStatus[index] : []} />
+                        <Attempt key={index} userWord={input} charStatus={charStatus[index]} />
                     ))}
                     {userInputs && userInputs.length < MAX_ATTEMPTS ? (
                         <>
                             <NewAttempt key={userInputs.length} city={city}/>
                             {Array.from({ length: MAX_ATTEMPTS - userInputs.length - 1 }).map((_, index) => (
-                                <Attempt key={userInputs.length + index + 1} userWord={city} display={false} charStatus={charStatus ? charStatus[index] : []} />
+                                <Attempt key={userInputs.length + index + 1} userWord={city} charStatus={[]} />
                             ))}
                         </>
                     ) : null}
@@ -51,7 +46,7 @@ export const Game = ({city}:{city:string}) => {
                         {win ? 'You guessed the correct city.' : 
                         `You ran out of attempts. The correct city was ${city}`}
                     </p>
-                    <button onClick={resetGame}>Restart</button>
+                    <button onClick={restart}>Restart</button>
                 </dialog>
             )}
         </div>

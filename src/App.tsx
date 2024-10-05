@@ -5,6 +5,7 @@ import { Game } from './components/Game'
 
 export const App = () => {
     const { city } = useCity()
+    console.log(city)
     return (
         <UserAttemptsProvider>
             <GameStatusProvider>

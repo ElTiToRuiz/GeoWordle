@@ -13,7 +13,7 @@ export const NewAttempt = ({ city }: { city: string }) => {
                 return userWord.slice(0, -1)
             } else if(key === 'Enter' && userWord.length == city.length){ 
                 nextLine(userWord)
-                setTimeout(()=>{checkLine({userWord, city})}, 0)
+                checkLine({userWord, city})
                 return ''
             } else if (/^[a-zA-Z]$/.test(key) && userWord.length < city.length) {
                 return userWord + key.toLocaleUpperCase()

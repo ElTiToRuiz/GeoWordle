@@ -4,11 +4,11 @@ import { UserAttemptsContext } from "../context/UserAttempts";
 import { checkLineCharacters } from "../utils/checkLine";
 
 export const useGameLogic = () => {
-    const { setWin, setEnd, setGameStarted } = useContext(GameStatusContext);
+    const { setWin, setEnd, gameStarted, setGameStarted } = useContext(GameStatusContext);
     const { userInputs, setUserInputs, charStatus, setCharStatus } = useContext(UserAttemptsContext);
 
     const startGame = () => {
-        setGameStarted(true);
+        setGameStarted(!gameStarted);
     };
 
     const nextLine = (newAttempt: string) => {
@@ -25,21 +25,21 @@ export const useGameLogic = () => {
         window.location.reload();
     };
 
-    const checkLine = ({ userWord, city }: { userWord: string; city: string }) => {
-        console.log(userWord);
+    const checkLine = async ({ userWord, city }: { userWord: string; city: string }) => {
         if (userWord === city) {
             setWin(true);
+            setEnd(true)
         }
 
-        const newCharStatus = checkLineCharacters({ userWord, city });
-        console.log(newCharStatus);
-
-        if (!charStatus) {
-            setCharStatus([newCharStatus]);
-        } else {
+        const newCharStatus: string[] = checkLineCharacters({ userWord, city });
+        
+        if (charStatus && charStatus.length > 0) {
             setCharStatus([...charStatus, newCharStatus]);
+        } else {
+            setCharStatus([newCharStatus]);
         }
 
+        
         if (userInputs && userInputs.length + 1 >= city.length) {
             setEnd(true);
         }
@@ -49,6 +49,6 @@ export const useGameLogic = () => {
         startGame,
         nextLine,
         restart,
-        checkLine,
+        checkLine
     };
 };
